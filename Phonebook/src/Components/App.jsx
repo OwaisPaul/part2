@@ -3,6 +3,7 @@ import PersonFilter from './PersonFilter'
 import Form from './Form'
 import Contacts from './Contacts'
 import contacts from '../Services/contacts'
+import Notify from './Notify'
 
 
 const App = () => {
@@ -15,6 +16,10 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   // state for searching 
   const [searchItem,setSearchItem] = useState('');
+  // state for notification
+  const [notification, setNotification] = useState(null)
+  // state for success or error for styling 
+  const [notificationType, setNotificationType] = useState('success')
 // using the useEffect in order to link the component to the external system
  useEffect(() => {
   console.log('effect')
@@ -49,6 +54,19 @@ const App = () => {
       .update(nameExists.id,updatedContact)
       .then(response => {
         setPersons(persons.map(person=> person.id !== nameExists.id ? person : response.data))
+        setNotification(`Updated ${updatedContact.name}`)
+        setNotificationType('success')
+        setTimeout(() => {
+          setNotification(null)
+          }, 5000)
+        })
+        .catch(error => {
+          console.error(error)
+          setNotification(`Information of ${updatedContact.name} has already been removed from server`)
+          setNotificationType('error')
+          setTimeout(() => {
+            setNotification(null)
+            }, 5000)
         })
           setNewName('')
           setNewNumber('')
@@ -63,9 +81,21 @@ const App = () => {
          setPersons(persons.concat(response.data))
          setNewName('')
          setNewNumber('')
+         setNotification(`Added ${newContact.name}`)
+         setNotificationType('success')
+         setTimeout(() => {
+          setNotification(null)
+         }, 5000)
          })
-
-     console.log(newContact);
+         .catch(error => {
+          console.log(error)
+          setNotification(`Failed to add ${newContact.name}`)
+          setNotificationType('error')
+          setTimeout(() => {
+            setNotification(null)
+            }, 5000)
+         })
+         console.log(newContact);
      console.log(persons);
      
      
@@ -79,7 +109,20 @@ const App = () => {
       .deleteContact(id)
       .then(() => {
         setPersons(persons.filter(person => person.id !== id))
+        setNotification(`Deleted contact`)
+        setNotificationType('success')
+        setTimeout(() => {
+          setNotification(null)
+          }, 5000)
         })
+        .catch(error => {
+          console.log(error)
+          setNotification(`Contact was already removed from the server`)
+          setNotificationType('error')
+          setTimeout(() => {
+            setNotification(null)
+            }, 5000)
+            })
         }
         }
   // for filtering the search contact and rendering only the searchItem
@@ -90,6 +133,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notify message={notification} type={notificationType} />
        <PersonFilter searchItem={searchItem} setSearchItem={setSearchItem} />
       <Form 
       addContact={addContact}
