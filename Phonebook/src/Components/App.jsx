@@ -58,7 +58,7 @@ const App = () => {
         setNotificationType('success')
         setTimeout(() => {
           setNotification(null)
-          }, 5000)
+          }, 3000)
         })
         .catch(error => {
           console.error(error)
@@ -66,7 +66,7 @@ const App = () => {
           setNotificationType('error')
           setTimeout(() => {
             setNotification(null)
-            }, 5000)
+            }, 3000)
         })
           setNewName('')
           setNewNumber('')
@@ -85,7 +85,7 @@ const App = () => {
          setNotificationType('success')
          setTimeout(() => {
           setNotification(null)
-         }, 5000)
+         }, 3000)
          })
          .catch(error => {
           console.log(error)
@@ -93,7 +93,7 @@ const App = () => {
           setNotificationType('error')
           setTimeout(() => {
             setNotification(null)
-            }, 5000)
+            }, 3000)
          })
          console.log(newContact);
      console.log(persons);
@@ -113,7 +113,7 @@ const App = () => {
         setNotificationType('success')
         setTimeout(() => {
           setNotification(null)
-          }, 5000)
+          }, 3000)
         })
         .catch(error => {
           console.log(error)
@@ -121,7 +121,7 @@ const App = () => {
           setNotificationType('error')
           setTimeout(() => {
             setNotification(null)
-            }, 5000)
+            }, 3000)
             })
         }
         }
